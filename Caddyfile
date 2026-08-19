@@ -1,3 +1,4 @@
-{$N8N_HOST} {
+103-59-94-162-nip.io {
     reverse_proxy n8n:5678
+    tls internal
 }
