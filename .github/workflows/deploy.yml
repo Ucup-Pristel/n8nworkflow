@@ -19,19 +19,18 @@ jobs:
           ssh-keyscan -H ${{ secrets.VPS_HOST }} >> ~/.ssh/known_hosts
 
       - name: Sync files ke VPS
-  run: |
-    rsync -avz --delete \
-      --exclude '.git' \
-      --exclude '.github' \
-      --exclude '.env' \
-      -e "ssh -i ~/.ssh/id_ed25519 -p ${{ secrets.VPS_PORT }}" \
-      ./ ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/home/deployer/n8nworkflow/n8nworkflow/
+        run: |
+          rsync -avz --delete \
+            --exclude '.git' \
+            --exclude '.github' \
+            -e "ssh -i ~/.ssh/id_ed25519 -p ${{ secrets.VPS_PORT }}" \
+            ./ ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/home/deployer/n8nworkflow/n8nworkflow/
 
       - name: Inject .env & deploy
         run: |
           ssh -i ~/.ssh/id_ed25519 -p ${{ secrets.VPS_PORT }} \
             ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} << 'EOF'
-            cd /home/deployer/n8n-automation
+            cd /home/deployer/n8nworkflow/n8nworkflow/
             echo "${{ secrets.ENV_FILE }}" > .env
             docker compose pull
             docker compose up -d --remove-orphans
