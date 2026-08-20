@@ -1,3 +1,3 @@
-{$N8N_HOST} {
+n8n-ucup.duckdns.org {
     reverse_proxy n8n:5678
 }
